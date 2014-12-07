@@ -1,0 +1,153 @@
+package com.luxoft.training.lab2.employees;
+    public class HourlyPay extends Payment{
+        double salary;
+        int hourly;
+    public HourlyPay(String name,String surname,int day,int month,int year,String office,int hourly,double salary){
+        super(name,surname,day,month,year,office);
+        this.salary=salary;
+        this.hourly=hourly;
+    }
+    @Override
+    public void salary(){
+        System.out.println("Payment type: Hourly Pay"+"\nSalary: "+salary+"\nHourly: "+hourly+"\nPayment: "+ salary*hourly+"\n\n");
+
+
+   
+package com.luxoft.training.lab2.employees;
+import com.luxoft.training.utils.Date;
+abstract public  class Payment {
+    private String name;
+    private String surname;
+    private String office;
+    private Date date;
+
+ public Payment(String name,String surname,int day,int month,int year,String office){
+    this.name=name;
+    this.surname=surname;
+    this.office=office;
+    this.date=new Date(day,month,year);
+ }
+    public String getSurname(){
+
+        return surname;
+    }
+    abstract public void salary();
+
+
+
+    @Override
+ public String toString(){
+
+    return"Name: "+ this.name+"\n"+"Surname: "+this.surname+"\n"+"Date: "+date+"\n"+"Office: "+this.office; }}
+
+
+package com.luxoft.training.lab2.employees;
+    public class PercentageOfSales extends Payment {
+        double rate;
+        double salesAmount;
+    public PercentageOfSales(String name,String surname,int day,int month,int year,String office,double salesAmount,double rate){
+        super(name,surname,day,month,year,office);
+        this.rate=rate;
+        this.salesAmount=salesAmount;
+    }
+    @Override
+    public void salary(){
+        System.out.println( "Payment type: Percentage of sales"+"\nRate: "+rate+"\nSales Amount: "+salesAmount+"\nPayment: "+(salesAmount/100)*(rate)+"\n\n"); }}
+
+
+package com.luxoft.training.lab2.employees;
+    public class Salary extends Payment{
+           double zarplata;
+    public Salary(String name,String surname,int day,int month,int year,String office,double zarplata){
+           super(name,surname,day,month,year,office);
+           this.zarplata=zarplata;
+    }
+    @Override
+    public void salary(){
+        System.out.println("Payment type: Salary"+"\nSalary: "+zarplata+"\nPayment: "+zarplata+"\n\n"); }}
+
+
+package com.luxoft.training.lab2.employees;
+public class SalaryAndPercentage extends PercentageOfSales{
+        double salary;
+    public SalaryAndPercentage(String name,String surname,int day,int month,int year,String office,double salesAmount,double rate,double salary){
+        super(name,surname,day,month,year,office,salesAmount,rate);
+        this.salary=salary;
+    }
+    @Override
+    public void salary(){
+        System.out.println("Payment type: Salary And Percentage"+"\nRate: "+rate+"\nSales Amount: "+salesAmount+"\nSalary: "+salary+"\nPayment: "+(salesAmount/100)*((rate)+salary)+"\n\n"); }}
+
+
+
+package com.luxoft.training.utils;
+
+public class Date {
+    int year;
+    int month;
+    int day;
+public Date(int day,int month,int year){
+   this.day=day;
+   this.month=month;
+   this.year=year;
+}
+    public String toString(){
+        return day+"."+month+"."+year;
+    }
+
+
+}
+
+package com.luxoft.training.utils;
+import com.luxoft.training.lab2.employees.Payment;
+
+
+public class Utils {
+
+    static public void sort(Payment mas[], int left, int right)
+    {
+        int i, j, p;
+        Payment tmp;
+        i=left;
+        j=right;
+        while (i!=j){
+            if((mas[i].getSurname().compareTo(mas[j].getSurname())>0)!=(i>j)){
+                tmp=mas[i];
+                mas[i]=mas[j];
+                mas[j]=tmp;
+
+                p=i;
+                i=j;
+
+                if (p<j)
+                    j=p+1;
+                else j=p-1;
+            }else{
+                if (i<j) j--;
+                else j++;
+            }
+        }
+
+        if (left<i-1) sort(mas,left,i-1);
+        if (i+1<right) sort(mas,i+1,right); }}
+
+
+
+package com.luxoft.training.lab2;
+import com.luxoft.training.lab2.employees.*;
+import com.luxoft.training.utils.*;
+
+public class PaymentCalcDemo {
+
+
+
+    public static void main(String []args ){
+        Payment[] payment=new Payment[4];
+        payment[0] = new Salary("Danya","Zya",10,10,1995,"vocal",200);
+        payment[1] = new HourlyPay("Duma","Serfas",12,6,1993,"vodiy",24,20.4);
+        payment[2] = new PercentageOfSales("Katin","Pasder",3,2,1997,"medsestra",10,5);
+        payment[3] = new SalaryAndPercentage("Andrey","Krafas",1,12,1998,"biznesmen",10,5,200);
+        Utils.sort(payment, 0, 3);
+        for (int i=0;i<4;i++){
+            System.out.print(payment[i]+"\n");
+            payment[i].salary();} }}
