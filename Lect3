@@ -1,0 +1,72 @@
+// Домашнее задание (Lect3.pdf)
+package classes;
+class Date {
+    int day;
+    int month;
+    int year;
+
+    Date(){
+        day = 1;
+        month = 1;
+        year = 1990;
+    }
+
+    Date(int day, int month, int year){
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+
+    void setDate(int day, int month, int year){
+        if(day > 31|| day <= 0 || month <+ 0 || month > 12 || year > 9999 || year < 0 ) return;
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+
+    void printDate(){
+        System.out.println(day + "." + month + "." + year);
+    }
+
+    void incDay(int day, int month , int year)
+    {
+        this.day += day;
+        this.month += month;
+        this.year += year;
+    }
+
+    void decDay(int day, int month , int year)
+    {
+        this.day -= day;
+        this.month -= month;
+        this.year -= year;
+    }
+
+    static int monthsCount (int month1, int month2){
+        return (Math.abs(month1 - month2));
+    }
+}
+
+
+class LabDemo{
+
+    public static void main(String[] args){
+        Date date1 = new Date(12, 04, 1999);
+        Date date2 = new Date();
+        date1.printDate();
+        date2.printDate();
+        date1.incDay(3, 2, 1);
+        date1.printDate();
+
+        date2.setDate( 11, 3 , 1998);
+        date2.printDate();
+        date2.decDay(1, 2, 3);
+        date2.printDate();
+
+        date1.monthsCount( date1.month, date2.month );
+
+
+    }
+}
+}
+
